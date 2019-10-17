@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Profile("usethis")
+@Profile("dev")
 @Primary
 
 public class MuzixServiceDummyImpl implements MuzixService{

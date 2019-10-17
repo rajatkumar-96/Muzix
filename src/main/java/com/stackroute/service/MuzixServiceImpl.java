@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class MuzixServiceImpl implements MuzixService {
-    muzixRepository muzixrepository;
+    private muzixRepository muzixrepository;
 
     @Autowired
     public MuzixServiceImpl(muzixRepository muzixreppository) {
