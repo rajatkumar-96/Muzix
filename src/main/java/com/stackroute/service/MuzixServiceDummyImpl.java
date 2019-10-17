@@ -5,23 +5,29 @@ import com.stackroute.exceptions.TrackAlreadyExistsException;
 import com.stackroute.exceptions.TrackNotFoundException;
 import com.stackroute.repository.muzixRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class MuzixServiceImpl implements MuzixService {
+@Profile("usethis")
+@Primary
+
+public class MuzixServiceDummyImpl implements MuzixService{
     muzixRepository muzixrepository;
 
     @Autowired
-    public MuzixServiceImpl(muzixRepository muzixreppository) {
+    public MuzixServiceDummyImpl(muzixRepository muzixreppository) {
         this.muzixrepository = muzixreppository;
     }
 
     @Override
     public Muzix saveTrack(Muzix muzix) throws TrackAlreadyExistsException {
         if(muzixrepository.existsById(muzix.getTrackId())){
-            throw new TrackAlreadyExistsException("Track Already Exists");
+            throw new TrackAlreadyExistsException("Track Already Exists,Please try again");
         }
         Muzix savedTrack = muzixrepository.save(muzix);
         return savedTrack;
@@ -37,7 +43,7 @@ public class MuzixServiceImpl implements MuzixService {
     public boolean deleteTrack(int trackId) throws TrackNotFoundException {
         Muzix muzix=new Muzix();
         if(!muzixrepository.existsById(muzix.getTrackId())){
-            throw new TrackNotFoundException("Track Not FOund");
+            throw new TrackNotFoundException("Track Not Found,Please try again");
         }
         muzixrepository.deleteById(trackId);
         return true;
@@ -47,7 +53,7 @@ public class MuzixServiceImpl implements MuzixService {
     public boolean updateComment(int trackId, String comment) throws  TrackNotFoundException {
         Muzix muzix=new Muzix();
         if(!muzixrepository.existsById(muzix.getTrackId())){
-            throw new TrackNotFoundException("Track Not FOund");
+            throw new TrackNotFoundException("Track Not Found,Please try again");
         }
         try {
             Muzix oldTrack = muzixrepository.getOne(trackId);
@@ -63,7 +69,7 @@ public class MuzixServiceImpl implements MuzixService {
     public List<Muzix> trackByName(String trackName) throws TrackNotFoundException {
         Muzix muzix=new Muzix();
         if(!muzixrepository.existsById(muzix.getTrackId())){
-            throw new TrackNotFoundException("Track Not FOund");
+            throw new TrackNotFoundException("Track Not Found,Please try again");
         }
         return muzixrepository.findAllTracksByName(trackName);
 
