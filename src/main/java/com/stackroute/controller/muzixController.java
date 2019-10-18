@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//@PropertySource("classpath:application.mongo.properties")
 @RestController
 @RequestMapping(value = "api/v1")
 public class muzixController {
